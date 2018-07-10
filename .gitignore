@@ -7,8 +7,11 @@
 # Files for the ART/Dalvik VM
 *.dex
 
+drawable/
+
 # Java class files
-URLS.class
+*.class
+URLS.java
 
 # Generated files
 bin/
