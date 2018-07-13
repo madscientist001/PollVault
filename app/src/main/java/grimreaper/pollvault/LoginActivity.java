@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button signInButton;
     TextInputEditText userEdit , passEdit;
     String username , password;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         userEdit = findViewById(R.id.userSignIn);
         passEdit = findViewById(R.id.passwordSignIn);
+
+        session = new SessionManager(getApplicationContext());
     }
 
     @Override
@@ -76,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     JSONObject response = new JSONObject(object);
                     Boolean confirmed = response.getBoolean("success");
                     if(confirmed){
+                        session.createLoginSession(user);
                         Intent intent = new Intent(getApplicationContext() , MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

@@ -15,11 +15,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private int NUM_PAGES = 2;
 
     private ViewPager mPager;
+
+    SessionManager session;
 
     TabLayout tabLayout;
 
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
 
         //toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mPager.setAdapter(mAdapter);
+
+        //check login status and redirect to login activity if logged out
+        session.checkLogin();
 
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setSelectedTabIndicatorColor(Color.WHITE);
@@ -112,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             //startActivity(intent);
             return true;
         }else if(id == R.id.logout){
+            session.logoutUser();
             return true;
         }
 
